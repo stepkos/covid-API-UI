@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -24,6 +25,24 @@ public class HelloApplication extends Application {
         Text localizationText = new Text("Choose localization");
         ChoiceBox localization = new ChoiceBox();
         localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
+
+        GridPane gridPane = new GridPane();
+        gridPane.setMinSize(600,500);
+        gridPane.setPadding(new Insets(10,10,10,10));
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+        gridPane.setStyle("-fx-background-color: LightCyan");
+
+        gridPane.add(dateText,0,0);
+        gridPane.add(datePicker,1,0);
+        gridPane.add(localizationText,0,1);
+        gridPane.add(localization,1,1);
+
+        Scene scene = new Scene(gridPane);
+        stage.setTitle("covid-API-UI");
+        stage.setScene(scene);
+        stage.show();
 
     }
 

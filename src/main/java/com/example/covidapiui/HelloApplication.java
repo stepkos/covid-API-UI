@@ -30,6 +30,21 @@ public class HelloApplication extends Application {
         CheckBox showInConsole = new CheckBox("Show");
         CheckBox saveToFile = new CheckBox("Save to file");
 
+        Button executeButton = new Button("Execute");
+
+        executeButton.setStyle(
+                executeButton.getStyle()
+                        .concat("-fx-padding: 10px 30px;")
+                        .concat("-fx-background-color: Orange")
+        );
+
+        executeButton.setOnAction(x -> {
+            System.out.println(datePicker.getValue());
+            System.out.println(localization.getValue());
+            System.out.println(showInConsole.isSelected());
+            System.out.println(saveToFile.isSelected());
+        });
+
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(600,500);
         gridPane.setPadding(new Insets(10,10,10,10));
@@ -45,6 +60,7 @@ public class HelloApplication extends Application {
         gridPane.add(actionText,0,2);
         gridPane.add(showInConsole,1,2);
         gridPane.add(saveToFile,2,2);
+        gridPane.add(executeButton,1,5);
 
         Scene scene = new Scene(gridPane);
         stage.setTitle("covid-API-UI");

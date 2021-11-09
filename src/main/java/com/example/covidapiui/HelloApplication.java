@@ -26,6 +26,10 @@ public class HelloApplication extends Application {
         ChoiceBox localization = new ChoiceBox();
         localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
 
+        Text actionText = new Text("Action");
+        CheckBox showInConsole = new CheckBox("Show");
+        CheckBox saveToFile = new CheckBox("Save to file");
+
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(600,500);
         gridPane.setPadding(new Insets(10,10,10,10));
@@ -38,6 +42,9 @@ public class HelloApplication extends Application {
         gridPane.add(datePicker,1,0);
         gridPane.add(localizationText,0,1);
         gridPane.add(localization,1,1);
+        gridPane.add(actionText,0,2);
+        gridPane.add(showInConsole,1,2);
+        gridPane.add(saveToFile,2,2);
 
         Scene scene = new Scene(gridPane);
         stage.setTitle("covid-API-UI");

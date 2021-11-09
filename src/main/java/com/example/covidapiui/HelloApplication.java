@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
@@ -32,6 +33,8 @@ public class HelloApplication extends Application {
 
         Button executeButton = new Button("Execute");
 
+        Text resultText = new Text("");
+
         executeButton.setStyle(
                 executeButton.getStyle()
                         .concat("-fx-padding: 10px 30px;")
@@ -39,10 +42,37 @@ public class HelloApplication extends Application {
         );
 
         executeButton.setOnAction(x -> {
-            System.out.println(datePicker.getValue());
-            System.out.println(localization.getValue());
-            System.out.println(showInConsole.isSelected());
-            System.out.println(saveToFile.isSelected());
+//            System.out.println(showInConsole.isSelected());
+//            System.out.println(saveToFile.isSelected());
+
+            String restOfUrl;
+            String date = datePicker.getValue().toString();
+            DayOfCovid cov = null;
+
+            switch (localization.getValue().toString()) {
+                case "Polska" -> restOfUrl = "month/?region=poland";
+                case "USA" -> restOfUrl = "month/?region=us";
+                case "Rosja" -> restOfUrl = "month/?region=russia";
+                case "Niemcy" -> restOfUrl = "month/?region=germany";
+                default -> restOfUrl = "summary";
+            }
+
+            try {
+                cov = new DayOfCovid(restOfUrl, date);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (showInConsole.isSelected()) {
+                resultText.setText(cov.toString());
+            }
+
+            if (saveToFile.isSelected()) {
+                cov.saveToJSONFile("result/save.json");
+            }
+
+
         });
 
         GridPane gridPane = new GridPane();
@@ -61,6 +91,7 @@ public class HelloApplication extends Application {
         gridPane.add(showInConsole,1,2);
         gridPane.add(saveToFile,2,2);
         gridPane.add(executeButton,1,5);
+        gridPane.add(resultText,1,7);
 
         Scene scene = new Scene(gridPane);
         stage.setTitle("covid-API-UI");

@@ -69,7 +69,7 @@ public class DayOfCovid {
         try (FileWriter file = new FileWriter(path)) {
             file.write(getInJSONObject().toJSONString());
             file.flush();
-            System.out.println("Files has saved successfull!");
+            System.out.println("Files has been saved successfull!");
 
         } catch (IOException e) {
             e.printStackTrace();

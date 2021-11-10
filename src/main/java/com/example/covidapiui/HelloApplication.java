@@ -33,7 +33,10 @@ public class HelloApplication extends Application {
 
         Button executeButton = new Button("Execute");
 
-        Text resultText = new Text("");
+        Text total_cases = new Text("no data");
+        Text deaths = new Text("no data");
+        Text recovered = new Text("no data");
+        Text tested = new Text("no data");
 
         executeButton.setStyle(
                 executeButton.getStyle()
@@ -65,13 +68,16 @@ public class HelloApplication extends Application {
             }
 
             if (showInConsole.isSelected()) {
-                resultText.setText(cov.toString());
+                System.out.println(cov);
+                total_cases.setText(String.valueOf(cov.getTotal_cases()));
+                deaths.setText(String.valueOf(cov.getDeaths()));
+                recovered.setText(String.valueOf(cov.getRecovered()));
+                tested.setText(String.valueOf(cov.getTested()));
             }
 
             if (saveToFile.isSelected()) {
                 cov.saveToJSONFile("result/save.json");
             }
-
 
         });
 
@@ -91,7 +97,15 @@ public class HelloApplication extends Application {
         gridPane.add(showInConsole,1,2);
         gridPane.add(saveToFile,2,2);
         gridPane.add(executeButton,1,5);
-        gridPane.add(resultText,1,7);
+
+        gridPane.add(new Text("Total cases: "),0,7);
+        gridPane.add(total_cases,1,7);
+        gridPane.add(new Text("Deaths: "),0,8);
+        gridPane.add(deaths,1,8);
+        gridPane.add(new Text("Recovered: "),0,9);
+        gridPane.add(recovered,1,9);
+        gridPane.add(new Text("Tested: "),0,10);
+        gridPane.add(tested,1,10);
 
         Scene scene = new Scene(gridPane);
         stage.setTitle("covid-API-UI");

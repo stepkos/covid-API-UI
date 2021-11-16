@@ -34,55 +34,85 @@ public class HelloApplication extends Application {
     Text recovered = new Text("no data");
     Text tested = new Text("no data");
 
+    GridPane gridPane = new GridPane();
+    Scene scene;
+
     @Override
     public void start(Stage stage) throws IOException {
 
         adjustLocalizator();
         adjustButton();
 
-        executeButton.setOnAction(x -> {
+        adjustGrid();
+        addElementsToGrid();
 
-            String restOfUrl;
-            String date = datePicker.getValue().toString();
-            DayOfCovid cov = null;
+        setScene();
 
-            switch (localization.getValue().toString()) {
-                case "Polska" -> restOfUrl = "month/?region=poland";
-                case "USA" -> restOfUrl = "month/?region=us";
-                case "Rosja" -> restOfUrl = "month/?region=russia";
-                case "Niemcy" -> restOfUrl = "month/?region=germany";
-                default -> restOfUrl = "summary";
-            }
+        stage.setTitle("covid-API-UI");
+        stage.setScene(scene);
+        stage.show();
 
-            try {
-                cov = new DayOfCovid(restOfUrl, date);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+    }
 
-            if (showInConsole.isSelected()) {
-                System.out.println(cov);
-                total_cases.setText(String.valueOf(cov.getTotal_cases()));
-                deaths.setText(String.valueOf(cov.getDeaths()));
-                recovered.setText(String.valueOf(cov.getRecovered()));
-                tested.setText(String.valueOf(cov.getTested()));
-            }
+    public void adjustLocalizator() {
+        localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
+    }
 
-            if (saveToFile.isSelected()) {
-                cov.saveToJSONFile("result/save.json");
-            }
+    public void adjustButton() {
+        executeButton.setStyle(
+                executeButton.getStyle()
+                        .concat("-fx-padding: 10px 50px;")
+                        .concat("-fx-background-color: Orange;")
+        );
 
-        });
+        executeButton.setOnAction(x -> executeButtonMethod());
+    }
 
-        GridPane gridPane = new GridPane();
+    public void executeButtonMethod() {
+
+        String restOfUrl;
+        String date = datePicker.getValue().toString();
+        DayOfCovid cov = null;
+
+        switch (localization.getValue().toString()) {
+            case "Polska" -> restOfUrl = "month/?region=poland";
+            case "USA" -> restOfUrl = "month/?region=us";
+            case "Rosja" -> restOfUrl = "month/?region=russia";
+            case "Niemcy" -> restOfUrl = "month/?region=germany";
+            default -> restOfUrl = "summary";
+        }
+
+        try {
+            cov = new DayOfCovid(restOfUrl, date);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (showInConsole.isSelected()) {
+            System.out.println(cov);
+            total_cases.setText(String.valueOf(cov.getTotal_cases()));
+            deaths.setText(String.valueOf(cov.getDeaths()));
+            recovered.setText(String.valueOf(cov.getRecovered()));
+            tested.setText(String.valueOf(cov.getTested()));
+        }
+
+        if (saveToFile.isSelected()) {
+            cov.saveToJSONFile("result/save.json");
+        }
+
+    }
+
+    public void adjustGrid() {
         gridPane.setMinSize(600,500);
         gridPane.setPadding(new Insets(10,10,10,10));
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(5);
         gridPane.setVgap(5);
         gridPane.setStyle("-fx-background-color: LightCyan");
+    }
 
+    public void addElementsToGrid() {
         gridPane.add(dateText,0,0);
         gridPane.add(datePicker,1,0);
         gridPane.add(localizationText,0,1);
@@ -100,26 +130,11 @@ public class HelloApplication extends Application {
         gridPane.add(recovered,1,9);
         gridPane.add(new Text("Tested: "),0,10);
         gridPane.add(tested,1,10);
-
-        Scene scene = new Scene(gridPane);
-        stage.setTitle("covid-API-UI");
-        stage.setScene(scene);
-        stage.show();
-
     }
 
-    public void adjustLocalizator() {
-        localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
+    public void setScene() {
+        scene = new Scene(gridPane);
     }
-
-    public void adjustButton() {
-        executeButton.setStyle(
-                executeButton.getStyle()
-                        .concat("-fx-padding: 10px 50px;")
-                        .concat("-fx-background-color: Orange;")
-        );
-    }
-
 
     public static void main(String[] args) {
         launch();

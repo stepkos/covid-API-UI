@@ -40,13 +40,11 @@ public class HelloApplication extends Application {
 
         executeButton.setStyle(
                 executeButton.getStyle()
-                        .concat("-fx-padding: 10px 30px;")
-                        .concat("-fx-background-color: Orange")
+                        .concat("-fx-padding: 10px 50px;")
+                        .concat("-fx-background-color: Orange;")
         );
 
         executeButton.setOnAction(x -> {
-//            System.out.println(showInConsole.isSelected());
-//            System.out.println(saveToFile.isSelected());
 
             String restOfUrl;
             String date = datePicker.getValue().toString();
@@ -95,8 +93,8 @@ public class HelloApplication extends Application {
         gridPane.add(localization,1,1);
         gridPane.add(actionText,0,2);
         gridPane.add(showInConsole,1,2);
-        gridPane.add(saveToFile,2,2);
-        gridPane.add(executeButton,1,5);
+        gridPane.add(saveToFile,1,3);
+        gridPane.add(executeButton,1,4);
 
         gridPane.add(new Text("Total cases: "),0,7);
         gridPane.add(total_cases,1,7);

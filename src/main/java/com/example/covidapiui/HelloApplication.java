@@ -17,32 +17,28 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
 
+    Text dateText = new Text("Podaj date");
+    DatePicker datePicker = new DatePicker();
+
+    Text localizationText = new Text("Choose localization");
+    ChoiceBox localization = new ChoiceBox();
+
+    Text actionText = new Text("Action");
+    CheckBox showInConsole = new CheckBox("Show");
+    CheckBox saveToFile = new CheckBox("Save to file");
+
+    Button executeButton = new Button("Execute");
+
+    Text total_cases = new Text("no data");
+    Text deaths = new Text("no data");
+    Text recovered = new Text("no data");
+    Text tested = new Text("no data");
+
     @Override
     public void start(Stage stage) throws IOException {
 
-        Text dateText = new Text("Podaj date");
-        DatePicker datePicker = new DatePicker();
-
-        Text localizationText = new Text("Choose localization");
-        ChoiceBox localization = new ChoiceBox();
-        localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
-
-        Text actionText = new Text("Action");
-        CheckBox showInConsole = new CheckBox("Show");
-        CheckBox saveToFile = new CheckBox("Save to file");
-
-        Button executeButton = new Button("Execute");
-
-        Text total_cases = new Text("no data");
-        Text deaths = new Text("no data");
-        Text recovered = new Text("no data");
-        Text tested = new Text("no data");
-
-        executeButton.setStyle(
-                executeButton.getStyle()
-                        .concat("-fx-padding: 10px 50px;")
-                        .concat("-fx-background-color: Orange;")
-        );
+        adjustLocalizator();
+        adjustButton();
 
         executeButton.setOnAction(x -> {
 
@@ -111,6 +107,19 @@ public class HelloApplication extends Application {
         stage.show();
 
     }
+
+    public void adjustLocalizator() {
+        localization.getItems().addAll("Caly swiat", "Polska", "USA", "Rosja", "Niemcy");
+    }
+
+    public void adjustButton() {
+        executeButton.setStyle(
+                executeButton.getStyle()
+                        .concat("-fx-padding: 10px 50px;")
+                        .concat("-fx-background-color: Orange;")
+        );
+    }
+
 
     public static void main(String[] args) {
         launch();
